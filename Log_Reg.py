@@ -6,10 +6,13 @@ from sklearn.model_selection import train_test_split
 
 class LogReg:
 
-    x = None
-    y = None
+    # x = None
+    # y = None
 
-
+    def __init__(self, z, a, b):
+        self.z = z
+        self.a = a
+        self.b = b
 
     def __sigmoid(self, z):
         '''The range of inputs is the set of all Real Numbers and the range of outputs is between 0 and 1.
@@ -22,7 +25,10 @@ class LogReg:
 
 
 
-    def __cost_function(self, ):
+    def __cost_function(self, y):
         y_pred = self.sig_func
         cost = -(1/X.shape[0])*np.sum(Y*np.log(y_pred) + (1-y)*np.log(1-y_pred))
-        
+        return cost
+
+
+    def __gradient(self,x,y):
