@@ -11,9 +11,10 @@ class LogReg:
 
 
     def __sigmoid(self, z):
-        # The range of inputs is the set of all Real Numbers and the range of outputs is between 0 and 1.
-        # z should increase positive infinity when the output get closer to 1
-        sig_func = (1 + np.exp(-z))/1
+        '''The range of inputs is the set of all Real Numbers and the range of outputs is between 0 and 1.
+        z should increase positive infinity when the output get closer to 1'''
+
+        sig_func = 1/(1 + np.exp(-z))
         return sig_func
 
     
