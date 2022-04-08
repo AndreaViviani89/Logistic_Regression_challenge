@@ -31,4 +31,9 @@ class LogReg:
         return cost
 
 
-    def __gradient(self,x,y):
+    def __gradient(self,X,y):
+        Dotx = np.dot(X.T, X)
+        Dotx_inverse = np.linalg.inv(Dotx)
+        Inverse_DotXT = np.dot(Dotx_inverse,X.T)
+        final = np.dot(Inverse_DotXT, y)
+        return final
