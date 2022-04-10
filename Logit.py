@@ -86,3 +86,14 @@ class LogitRegresion:
             print(self.__log_likelihood(features, target, weights))
         
         return weights
+
+
+    def accuracy(self, features, target):
+        weights=self.logistic_regression(features, target)
+        finalscores = np.dot(np.hstack((np.ones((features.shape[0], 1)),
+                                 features)), weights)
+        preds = np.round(self.sigmoid(finalscores))
+        accuracy = (preds == target).sum().astype(float) / len(preds)
+        return accuracy
+
+        
