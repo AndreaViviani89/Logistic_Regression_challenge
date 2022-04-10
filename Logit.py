@@ -1,6 +1,7 @@
 
 from typing import Any
 import numpy as np
+import matplotlib.pyplot as plt
 
 class LogitRegresion:
     """Logistic regression is a generalized linear model that 
@@ -96,4 +97,10 @@ class LogitRegresion:
         accuracy = (preds == target).sum().astype(float) / len(preds)
         return accuracy
 
-        
+    def graph(self, features, target):
+        self.features = features
+        self.target = target
+        fig = plt.figure(figsize=(12,8))
+        fig.plt.scatter(self.features[:, 0], self.features[:, 1], c = self.target, alpha = .4)
+        return fig
+
