@@ -1,21 +1,37 @@
 
+from typing import Any
 import numpy as np
 
-class LogisticRegresion:
-    """"""
+class LogitRegresion:
+    """Logistic regression is a generalized linear model that 
+      uses to model or predict categorical outcome variables.
+      It predicts using the binary classification of 0, and 1 
+      for probability of of occurring  and not occurring:
+       
+       (method): logistic_regression(features,target, learning_rate, number_steps, add_intercept) 
 
-    def __init__(self,number_steps=100, learning_rate=0.5, add_intercept = False) -> None:
+       features:   The features for the trained set from the dataset
+       target:  The population of the dataset is required to obtain an important info
+                for prediction
+       learnin_rate:    Is a float value from the range of (0,1) with the default= 0.5, the smaller the 
+                        higher the precision of accuracy of the model.
+        add_intercept:  A bool function with the default= False
+        number_steps:  The number iteration for the data i.e how many simulation 
+                        default=100
+    """
+
+    def __init__(self,number_steps=100, learning_rate=0.5, add_intercept = False) -> Any:
         self.number_steps=number_steps
         self.learning_rate=learning_rate
         self.add_intercept=add_intercept
 
-    def __sigmoid(self, scores):
+    def sigmoid(self, scores):
         '''the sigmoid function is:
-        1 / (1 + e^x)
-        The range of inputs is the set of all Real Numbers 
-        and the range of outputs is between 0 and 1.
-        z should increase positive infinity when
-         the output get closer to 1
+            z=1 / (1 + e^x)
+            The range of inputs is the set of all Real Numbers 
+            and the range of outputs is between 0 and 1.
+            z should increase positive infinity when
+            the output get closer to 1
          '''
         sig_func = 1/(1 + np.exp(-scores))
         return sig_func
@@ -33,6 +49,19 @@ class LogisticRegresion:
         return ll
     
     def logistic_regression(self, features, target):
+        """
+        logistic_regression is to optimized the linear regression with an intercept using the 
+        sigmoid function with the computation of the gradient of the 
+        log likelihood of the logit function. 
+
+        scores -> feature * weights
+        preds -> sigmoid(scores)
+        error = target-preds
+        gradient -> transposed feature * error
+        weight -> weights+ learning_rate * gradient
+        
+        """
+
         if self.add_intercept:
             intercept = np.ones((features.shape[0], 1))
             features = np.hstack((intercept, features))
@@ -46,7 +75,7 @@ class LogisticRegresion:
             # gradient -> transposed feature * error
             # weight -> weights+ learning_rate * gradient
             scores=np.dot(features, weights)
-            preds=self.__sigmoid(scores)
+            preds=self.sigmoid(scores)
             error=target-preds
             gradient=np.dot(features.T, error)
             weights=weights+self.learning_rate*gradient
