@@ -39,6 +39,7 @@ class LogitRegresion:
 
     def __log_likelihood(self, features, target, weights):
         """
+        The log-likelihood can be viewed as as sum over all the training data.
         the log likelihood is the logrithm of the of maximium 
         of the independent variable of the features of the data set
         of sigmoid function.
@@ -83,13 +84,17 @@ class LogitRegresion:
 
         
             # Print log-likelihood every so often
-        if step % 10000 == 0:
-            print(self.__log_likelihood(features, target, weights))
+            if step % 10000 == 0:
+                print(self.__log_likelihood(features, target, weights))
         
         return weights
 
 
     def accuracy(self, features, target):
+
+        '''We need to use the final weights to get the logits for the dataset (`final_scores`). Then I can use `sigmoid` to get the final predictions.
+        -   accuracy is the percentages of correct guesses 0-1'''
+
         weights=self.logistic_regression(features, target)
         finalscores = np.dot(np.hstack((np.ones((features.shape[0], 1)),
                                  features)), weights)
@@ -97,10 +102,13 @@ class LogitRegresion:
         accuracy = (preds == target).sum().astype(float) / len(preds)
         return accuracy
 
-    def graph(self, features, target):
-        self.features = features
-        self.target = target
-        fig = plt.figure(figsize=(12,8))
-        fig.plt.scatter(self.features[:, 0], self.features[:, 1], c = self.target, alpha = .4)
-        return fig
+
+    # def graph(self, features, target):
+    #     self.features = features
+    #     self.target = target
+    #     plt.figure(figsize=(12,8))
+    #     fig1 = plt.scatter(self.features[:, 0], self.features[:, 1], c = self.target, alpha = .4)
+    #     return fig1
+
+
 
